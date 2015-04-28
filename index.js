@@ -2,7 +2,7 @@
       chroma.palette-gen.js - a palette generator for data scientists
 	  based on Chroma.js HCL color space
       Copyright (C) 2012  Mathieu Jacomy
-  
+
   	The JavaScript code in this page is free software: you can
       redistribute it and/or modify it under the terms of the GNU
       General Public License (GNU GPL) as published by the Free Software
@@ -10,17 +10,19 @@
       any later version.  The code is distributed WITHOUT ANY WARRANTY;
       without even the implied warranty of MERCHANTABILITY or FITNESS
       FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-  
+
       As additional permission under GNU GPL version 3 section 7, you
       may distribute non-source (e.g., minimized or compacted) forms of
       that code without the copy of the GNU GPL normally required by
       section 4, provided you include this license notice and a URL
-      through which recipients can access the Corresponding Source.  
+      through which recipients can access the Corresponding Source.
   */
- 
+
 // v0.1
- 
-var paletteGenerator = (function(undefined){
+
+var chroma = require('chroma-js');
+
+var PaletteGenerator = (function(undefined){
 	ns = {}
 
 	ns.generate = function(colorsCount, checkColor, forceMode, quality, ultra_precision){
@@ -37,15 +39,15 @@ var paletteGenerator = (function(undefined){
 
 		if(forceMode){
 			// Force Vector Mode
-			
+
 			var colors = [];
-			
+
 			// It will be necessary to check if a Lab color exists in the rgb space.
 			function checkLab(lab){
 				var color = chroma.lab(lab[0], lab[1], lab[2]);
 				return !isNaN(color.rgb[0]) && color.rgb[0]>=0 && color.rgb[1]>=0 && color.rgb[2]>=0 && color.rgb[0]<256 && color.rgb[1]<256 && color.rgb[2]<256 && checkColor(color);
 			}
-			
+
 			// Init
 			var vectors = {};
 			for(i=0; i<colorsCount; i++){
@@ -56,7 +58,7 @@ var paletteGenerator = (function(undefined){
 				}
 				colors.push(color);
 			}
-			
+
 			// Force vector: repulsion
 			var repulsion = 0.3;
 			var speed = 0.05;
@@ -71,7 +73,7 @@ var paletteGenerator = (function(undefined){
 					var colorA = colors[i];
 					for(j=0; j<i; j++){
 						var colorB = colors[j];
-						
+
 						// repulsion force
 						var dl = colorA[0]-colorB[0];
 						var da = colorA[1]-colorB[1];
@@ -79,11 +81,11 @@ var paletteGenerator = (function(undefined){
 						var d = Math.sqrt(Math.pow(dl, 2)+Math.pow(da, 2)+Math.pow(db, 2));
 						if(d>0){
 							var force = repulsion/Math.pow(d,2);
-							
+
 							vectors[i].dl += dl * force / d;
 							vectors[i].da += da * force / d;
 							vectors[i].db += db * force / d;
-							
+
 							vectors[j].dl -= dl * force / d;
 							vectors[j].da -= da * force / d;
 							vectors[j].db -= db * force / d;
@@ -109,9 +111,9 @@ var paletteGenerator = (function(undefined){
 				}
 			}
 			return colors.map(function(lab){return chroma.lab(lab[0], lab[1], lab[2]);});
-			
+
 		} else {
-			
+
 			// K-Means Mode
 			function checkColor2(color){
 				// Check that a color is valid: it must verify our checkColor condition, but also be in the color space
@@ -119,7 +121,7 @@ var paletteGenerator = (function(undefined){
 				var hcl = color.hcl();
 				return !isNaN(color.rgb[0]) && color.rgb[0]>=0 && color.rgb[1]>=0 && color.rgb[2]>=0 && color.rgb[0]<256 && color.rgb[1]<256 && color.rgb[2]<256 && checkColor(color);
 			}
-			
+
 			var kMeans = [];
 			for(i=0; i<colorsCount; i++){
 				var lab = [Math.random(),2*Math.random()-1,2*Math.random()-1];
@@ -128,7 +130,7 @@ var paletteGenerator = (function(undefined){
 				}
 				kMeans.push(lab);
 			}
-			
+
 			var colorSamples = [];
 			var samplesClosest = [];
 			if(ultra_precision){
@@ -154,8 +156,8 @@ var paletteGenerator = (function(undefined){
 					}
 				}
 			}
-			
-			
+
+
 			// Steps
 			var steps = quality;
 			while(steps-- > 0){
@@ -172,7 +174,7 @@ var paletteGenerator = (function(undefined){
 						}
 					}
 				}
-				
+
 				// Samples -> kMeans
 				var freeColorSamples = colorSamples.slice(0);
 				for(j=0; j<kMeans.length; j++){
@@ -191,7 +193,7 @@ var paletteGenerator = (function(undefined){
 						candidateKMean[1] /= count;
 						candidateKMean[2] /= count;
 					}
-					
+
 					if(count!=0 && checkColor2(chroma.lab(candidateKMean[0], candidateKMean[1], candidateKMean[2])) && candidateKMean){
 						kMeans[j] = candidateKMean;
 					} else {
@@ -267,7 +269,7 @@ var paletteGenerator = (function(undefined){
 
 		// Proposition for color-blind compliant distance:
 		// return 0.3 * trichromaticDistance(lab1, lab2) + 0.7 * redgreenDeficiencyDistance(lab1, lab2);
-		
+
 		function trichromaticDistance(lab1, lab2){
 			return Math.sqrt(Math.pow(lab1[0]-lab2[0], 2) + Math.pow(lab1[1]-lab2[1], 2) + Math.pow(lab1[2]-lab2[2], 2));
 		}
@@ -280,3 +282,5 @@ var paletteGenerator = (function(undefined){
 
 	return ns
 })();
+
+module.exports = PaletteGenerator;

@@ -1,0 +1,23 @@
+{
+  "name": "iwanthue",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andrewliebchen/iwanthue.git"
+  },
+  "author": "",
+  "license": "GNU",
+  "bugs": {
+    "url": "https://github.com/andrewliebchen/iwanthue/issues"
+  },
+  "homepage": "https://github.com/andrewliebchen/iwanthue",
+  "dependencies": {
+    "chroma-js": "^0.7.2",
+    "express": "^4.12.3"
+  }
+}
