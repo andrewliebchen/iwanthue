@@ -1,22 +1,27 @@
 {
-  "name": "iwanthue",
+  "name": "iwanthue-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "API for iWantHue, a palette generator for scientists",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/andrewliebchen/iwanthue.git"
+    "url": "https://github.com/andrewliebchen/iwanthueAPI.git"
   },
-  "author": "",
-  "license": "GNU",
+  "author": {
+    "name": "Mathieu Jacomy",
+    "email": "Mathieu.Jacomy@gmail.com",
+    "url": "https://github.com/jacomyma"},
+  "contributors": [{
+    "name": "Andrew Liebchen",
+    "email": "aliebchen@opengov.com",
+    "url": "https://github.com/andrewliebchen"
+  }],
+  "license": "GPL",
   "bugs": {
-    "url": "https://github.com/andrewliebchen/iwanthue/issues"
+    "url": "https://github.com/andrewliebchen/iwanthueAPI/issues"
   },
-  "homepage": "https://github.com/andrewliebchen/iwanthue",
-  "dependencies": {
-
-  }
+  "homepage": "https://github.com/andrewliebchen/iwanthueAPI"
 }
