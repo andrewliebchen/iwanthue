@@ -20,9 +20,10 @@
 
 // v0.1
 
-var chroma = require('chroma-js');
 
-var PaletteGenerator = (function(undefined){
+var chroma = require('./chroma');
+
+module.exports = function(){
 	ns = {}
 
 	ns.generate = function(colorsCount, checkColor, forceMode, quality, ultra_precision){
@@ -281,6 +282,4 @@ var PaletteGenerator = (function(undefined){
 	}
 
 	return ns
-})();
-
-module.exports = PaletteGenerator;
+};
