@@ -1,6 +1,6 @@
 {
   "name": "iwanthue-api",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "API for iWantHue, a palette generator for scientists",
   "main": "index.js",
   "scripts": {

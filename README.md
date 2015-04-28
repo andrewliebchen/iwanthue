@@ -1,8 +1,10 @@
 # iWantHue API
 [iWantHue](https://github.com/medialab/iwanthue) is a palette generator for scientists. This module intends to be a handy port of the original tool for inclusion in other projects.
 
+[iWantHue...to want...me!](https://www.youtube.com/watch?v=BJs_L7yq5qE)
+
 ## Installation
-Install iWantHueAPI with NPM:
+~~Install iWantHueAPI with [npm](https://www.npmjs.com/):~~
 ```
 npm install iwanthue-api
 ```
