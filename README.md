@@ -4,7 +4,7 @@
 [iWantHue...to want...me!](https://www.youtube.com/watch?v=BJs_L7yq5qE)
 
 ## Installation
-~~Install iWantHueAPI with [npm](https://www.npmjs.com/):~~
+Install iWantHueAPI with [npm](https://www.npmjs.com/):
 ```
 npm install iwanthue-api
 ```
